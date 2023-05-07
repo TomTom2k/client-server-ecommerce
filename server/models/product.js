@@ -12,7 +12,8 @@ const ProductSchema = Schema(
 		images: [String],
 		price: { type: Number, min: 0 },
 		stock: { type: Number, min: 0, default: 0 },
-		brand: Schema.Types.ObjectId,
+		brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
+		category: { type: Schema.Types.ObjectId, ref: 'Category' },
 		description: [DescriptionSchema],
 		userManual: [String],
 

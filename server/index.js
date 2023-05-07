@@ -12,6 +12,7 @@ const port = 5000;
 app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
+
 app.use(cors());
 
 //connect database

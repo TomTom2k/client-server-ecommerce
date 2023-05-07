@@ -1,6 +1,6 @@
 const express = require('express');
 
-const upload = require('../helpers/uploadMiddleware');
+const upload = require('../helpers/uploadImageMiddleware');
 const {
 	getAllProduct,
 	createProduct,

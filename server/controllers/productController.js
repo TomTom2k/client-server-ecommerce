@@ -7,12 +7,17 @@ const Product = require('../models/product');
 // [GET] /products
 const getAllProduct = async (req, res, next) => {
 	try {
-		let products = await product.find({});
+		let products = await Product.find({}).populate('brand', {
+			title: 1,
+			_id: 00,
+		});
 		return res.status(200).json(products);
 	} catch (error) {
 		next(error);
 	}
 };
+
+// const getProductDetail = async (req, res, next) => {};
 
 // [POST] /products
 const createProduct = async (req, res, next) => {
@@ -31,8 +36,6 @@ const createProduct = async (req, res, next) => {
 			const fileExtension = path.extname(fileName).toLowerCase();
 
 			if (fileExtensions.some((ext) => fileExtension.endsWith(ext))) {
-				// Delete the old image file
-
 				// Create a new filename with the WebP extension
 				const newFileName = fileName.replace(fileExtension, '.webp');
 				const newFilePath = `${path.dirname(filePath)}/${newFileName}`;
