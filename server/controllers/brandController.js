@@ -35,7 +35,7 @@ const createBrand = async (req, res, next) => {
 // [PATCH] /brand/:id
 const updateBrand = async (req, res, next) => {
 	try {
-		let id = req.params.id;
+		const id = req.params.id;
 		const body = req.body;
 		await Brand.findByIdAndUpdate(id, body);
 		return res.status(201).json({ brand: 'UPDATE SUCCESS' });

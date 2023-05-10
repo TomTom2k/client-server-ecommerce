@@ -1,20 +1,15 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const DescriptionSchema = Schema({
-	title: String,
-	content: [String],
-});
-
 const ProductSchema = Schema(
 	{
 		title: { type: String, require: true },
-		images: [String],
-		price: { type: Number, min: 0 },
+		images: { type: [String], require: true },
+		price: { type: Number, min: 0, require: true },
 		stock: { type: Number, min: 0, default: 0 },
-		brand: { type: Schema.Types.ObjectId, ref: 'Brand' },
+		brand: { type: Schema.Types.ObjectId, ref: 'Brand', require: true },
 		category: { type: Schema.Types.ObjectId, ref: 'Category' },
-		description: [DescriptionSchema],
+		description: String,
 		userManual: [String],
 
 		status: {

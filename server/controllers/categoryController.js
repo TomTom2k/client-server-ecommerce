@@ -1,4 +1,5 @@
 const Category = require('../models/category');
+const Product = require('../models/product');
 // [GET] /Category
 const getAllCategory = async (req, res, next) => {
 	try {
@@ -21,7 +22,21 @@ const createCategory = async (req, res, next) => {
 	}
 };
 
+// [DELETE] /Category/:id
+const deleteCategory = async (req, res, next) => {
+	try {
+		let id = req.params.id;
+		await Category.findByIdAndRemove(id);
+
+		await Product.updateMany({ category: id }, { $unset: { category: 1 } });
+		return res.status(201).json({ brand: 'DELETE SUCCESS' });
+	} catch (error) {
+		next(error);
+	}
+};
+
 module.exports = {
 	getAllCategory,
 	createCategory,
+	deleteCategory,
 };

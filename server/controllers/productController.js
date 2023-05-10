@@ -7,22 +7,34 @@ const Product = require('../models/product');
 // [GET] /products
 const getAllProduct = async (req, res, next) => {
 	try {
-		let products = await Product.find({}).populate('brand', {
-			title: 1,
-			_id: 00,
-		});
+		let products = await Product.find({})
+			.populate('brand', 'title')
+			.populate('category', 'name')
+			.select('title images price stock brand category status');
 		return res.status(200).json(products);
 	} catch (error) {
 		next(error);
 	}
 };
 
-// const getProductDetail = async (req, res, next) => {};
+// [GET] /products/:id
+const getProductDetail = async (req, res, next) => {
+	try {
+		let id = req.params.id;
+		let products = await Product.findById(id)
+			.populate('brand')
+			.populate('category');
+		return res.status(200).json(products);
+	} catch (error) {
+		next(error);
+	}
+};
 
 // [POST] /products
 const createProduct = async (req, res, next) => {
 	try {
-		const files = req.files;
+		const description = req.files.description;
+		const images = req.files.images;
 		const newProduct = req.body;
 		const product = new Product(newProduct);
 
@@ -30,9 +42,9 @@ const createProduct = async (req, res, next) => {
 		const fileExtensions = ['png', 'jpg', 'jpeg', 'gif'];
 
 		// loop through the files and convert each PNG image to WebP
-		for (let file of files) {
-			const filePath = file.path;
-			const fileName = file.filename;
+		for (let image of images) {
+			const filePath = image.path;
+			const fileName = image.filename;
 			const fileExtension = path.extname(fileName).toLowerCase();
 
 			if (fileExtensions.some((ext) => fileExtension.endsWith(ext))) {
@@ -44,7 +56,9 @@ const createProduct = async (req, res, next) => {
 					.toFormat('webp')
 					.toFile(newFilePath)
 					.then((buffer) => {
-						product.images.push(newFilePath);
+						product.images.push(
+							newFilePath.replace('public\\images', 'images')
+						);
 						// Delete the original image file
 						fs.unlink(filePath, (err) => {
 							if (err) {
@@ -58,8 +72,27 @@ const createProduct = async (req, res, next) => {
 			}
 		}
 
+		if (description) {
+			product.description = description[0].path.replace(
+				'public\\markdown\\',
+				'markdown/'
+			);
+		}
+
 		await product.save();
 		return res.status(201).json({ product });
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [PATCH] /products/:id
+const updateStatus = async (req, res, next) => {
+	try {
+		const id = req.params.id;
+		const body = req.body;
+		await Product.findByIdAndUpdate(id, body);
+		return res.status(201).json("product: 'UPDATE STATUS SUCCESS'");
 	} catch (error) {
 		next(error);
 	}
@@ -68,4 +101,6 @@ const createProduct = async (req, res, next) => {
 module.exports = {
 	getAllProduct,
 	createProduct,
+	getProductDetail,
+	updateStatus,
 };

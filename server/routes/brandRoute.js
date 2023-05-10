@@ -1,7 +1,6 @@
 const router = require('express').Router();
-const multer = require('multer');
 
-const upload = require('../helpers/uploadFileMiddleware');
+const upload = require('../helpers/uploadMiddleware');
 const {
 	getAllBrand,
 	createBrand,
