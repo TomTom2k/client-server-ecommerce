@@ -10,7 +10,7 @@ const AsideStyled = styled.aside`
 	width: var(--width-aside);
 `;
 const ContainerStyled = styled.div`
-	width: 100%;
+	width: calc(100% - var(--width-aside));
 	padding: 2rem 1rem;
 `;
 

@@ -17,8 +17,9 @@ function getItem(label, key, icon, children, type) {
 
 const MenuStyled = styled(Menu)`
 	height: 100vh;
-	width: 100%;
+	width: var(--width-aside);
 	overflow-y: auto;
+	position: fixed;
 `;
 
 const items = [

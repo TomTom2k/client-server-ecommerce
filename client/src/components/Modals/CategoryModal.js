@@ -1,6 +1,5 @@
 import React from 'react';
-import { Button, Form, Input, Modal, Space, Upload } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Modal, Space } from 'antd';
 
 const Field = ({ label, name, rules, input, ...passPros }) => (
 	<Form.Item
@@ -20,54 +19,44 @@ const Field = ({ label, name, rules, input, ...passPros }) => (
 	</Form.Item>
 );
 
-const BrandModal = ({ open = false, handlerSubmit, handlerCancel }) => {
+const CategoryModal = ({ open = false, handlerSubmit, handlerCancel }) => {
 	const [form] = Form.useForm();
 	const onFinish = (values) => {
 		handlerSubmit(values);
 		form.resetFields();
 	};
 	return (
-		<Modal title="Thêm thể loại" open={open} closable={false} footer={null}>
-			<Form name="basic" onFinish={onFinish} form={form}>
+		<Modal
+			title="Thêm thương hiệu"
+			open={open}
+			closable={false}
+			footer={null}
+		>
+			<Form name="basic" onFinish={handlerSubmit} form={form}>
 				<Field
-					label="Tên thương hiệu"
-					name="title"
+					label="Thể loại"
+					name="name"
 					rules={[
 						{
 							required: true,
-							message: 'Vui lòng nhập tên thương hiệu',
+							message: 'Vui lòng nhập thể loại!',
 						},
 					]}
 					input={<Input />}
 				/>
 
 				<Field
-					label="Tóm tắc"
-					name="summary"
-					rules={[
-						{
-							required: true,
-							message: 'Vui lòng nhập tóm tắt!',
-						},
-					]}
-					input={<Input />}
-				/>
-
-				<Field
-					name="description"
 					label="Miêu tả"
-					valuePropName="fileList"
-					getValueFromEvent={(event) => event.fileList}
-					input={
-						<Upload
-							beforeUpload={() => false}
-							name="description"
-							maxCount={1}
-						>
-							<Button icon={<UploadOutlined />}>Thêm file</Button>
-						</Upload>
-					}
+					name="description"
+					rules={[
+						{
+							required: true,
+							message: 'Vui lòng nhập miêu tả!',
+						},
+					]}
+					input={<Input />}
 				/>
+
 				<Form.Item
 					wrapperCol={{
 						offset: 8,
@@ -88,4 +77,4 @@ const BrandModal = ({ open = false, handlerSubmit, handlerCancel }) => {
 	);
 };
 
-export default BrandModal;
+export default CategoryModal;

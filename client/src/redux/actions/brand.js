@@ -11,3 +11,9 @@ export const createBrand = createActions({
 	createBrandSuccess: (payload) => payload,
 	createBrandFailure: (err) => err,
 });
+
+export const deleteBrand = createActions({
+	deleteBrandRequest: (brandId) => brandId,
+	deleteBrandSuccess: (brandId) => brandId,
+	deleteBrandFailure: (err) => err,
+});

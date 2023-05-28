@@ -2,12 +2,18 @@ const routes = {
 	home: '/',
 	list: '/list',
 	product: '/product',
+	contact: '/contact',
+	intro: '/intro',
+	account: '/account',
+	cart: '/cart',
+
+	profile: '/profile',
 
 	admin: '/admin',
-	manageBrands: '/admin/brands',
+	manageBrands: '/admin/brand',
 	manageCategory: '/admin/category',
-	manageProducts: '/admin/products',
-	manageAccounts: '/admin/accounts',
+	manageProducts: '/admin/product',
+	manageAccounts: '/admin/account',
 };
 
 export default routes;

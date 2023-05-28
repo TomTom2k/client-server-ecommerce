@@ -8,8 +8,10 @@ export const INIT_STATE = {
 		isLoading: false,
 		data: [],
 	},
+
 	product: {
 		isLoading: false,
-		data: [],
+		products: [],
+		productsSubmit: [],
 	},
 };

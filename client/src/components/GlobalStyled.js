@@ -1,7 +1,8 @@
 import { createGlobalStyle } from 'styled-components';
 
 export const theme = {
-	'@primary-color': '#d5f2e3',
+	'@primary-color': '#b8b8d1',
+	'@secondary-color': '#5b5f97',
 };
 
 const GlobalStyle = createGlobalStyle`
@@ -10,18 +11,28 @@ const GlobalStyle = createGlobalStyle`
 		src: url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap');
 	}
 
+	@font-face {
+		font-family: 'DynaPuff', cursive;
+		src: url('https://fonts.googleapis.com/css2?family=DynaPuff:wght@700&display=swap');;
+	}
+
 	:root {
-		--primary-color:  ${(props) => props.theme['@primary-color']},
-		--secondary-background: #73ba9b;
+		--primary-color:  ${(props) => props.theme['@primary-color']};
+		--secondary-color:  ${(props) => props.theme['@secondary-color']};
+		--primary-background: #ecf0f3;
+		--secondary-background: #fff;
 
 		--text-900: #100e34;
 		--text-700: #e1dee6;
+		--text-100: #e6e9ed;
+		--text-50: #f5f7fa;
 
 
 		--black: #000;
 		--white: #fff;
 
-		--width-aside: 25rem;
+		--width-aside: 15rem;
+		--max-width-default-layout: 71rem;
 	}
 
 	* {
@@ -29,6 +40,7 @@ const GlobalStyle = createGlobalStyle`
 		padding: 0;
 		box-sizing: border-box;
 		font-family: 'Roboto', sans-serif;
+		list-style: none;
 	}
 
 	html,
@@ -51,6 +63,18 @@ const GlobalStyle = createGlobalStyle`
 	html *::-webkit-scrollbar-track {
 		border-radius: 0;
 		background-color: rgba(0, 0, 0, 0);
+	}
+
+	${'' /*  */}
+	button, input {
+		border: none;
+		outline: none;
+		background-color: transparent;
+	}
+
+	a {
+		text-decoration: none;
+		color: var(--text-900);
 	}
 `;
 
