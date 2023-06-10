@@ -15,13 +15,6 @@ function getItem(label, key, icon, children, type) {
 	};
 }
 
-const MenuStyled = styled(Menu)`
-	height: 100vh;
-	width: var(--width-aside);
-	overflow-y: auto;
-	position: fixed;
-`;
-
 const items = [
 	getItem('Quản lý sản phẩm', 'manageProduct', <ShopOutlined />, [
 		getItem('Danh sách thương hiệu', configs.routes.manageBrands),
@@ -32,6 +25,14 @@ const items = [
 		getItem('Danh sách tài khoản', configs.routes.manageAccounts),
 	]),
 ];
+
+const MenuStyled = styled(Menu)`
+	height: 100vh;
+	width: var(--width-aside);
+	overflow-y: auto;
+	position: fixed;
+`;
+
 const AsideAdmin = () => {
 	const navigate = useNavigate();
 	const onClick = (e) => {

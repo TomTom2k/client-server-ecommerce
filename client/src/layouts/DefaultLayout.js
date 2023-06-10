@@ -1,8 +1,8 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
 import Header from './components/Header';
+import Footer from './components/Footer';
 
 const WrapperStyled = styled.div``;
 const ContainerStyled = styled.div``;
@@ -11,6 +11,7 @@ const DefaultLayout = ({ children }) => {
 		<WrapperStyled>
 			<Header />
 			<ContainerStyled>{children}</ContainerStyled>
+			<Footer />
 		</WrapperStyled>
 	);
 };

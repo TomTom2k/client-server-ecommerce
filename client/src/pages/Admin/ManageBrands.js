@@ -18,8 +18,8 @@ const ManageBrands = () => {
 		dispatch(brandActions.getBrands.getBrandsRequest());
 	}, [dispatch]);
 
-	const showModal = () => {
-		setIsModalOpen(true);
+	const confirm = (e) => {
+		dispatch(brandActions.deleteBrand.deleteBrandRequest(e));
 	};
 	const handleCancel = () => {
 		setIsModalOpen(false);
@@ -36,10 +36,10 @@ const ManageBrands = () => {
 		dispatch(brandActions.createBrand.createBrandRequest(formData));
 		setIsModalOpen(false);
 	};
-
-	const confirm = (e) => {
-		dispatch(brandActions.deleteBrand.deleteBrandRequest(e));
+	const showModal = () => {
+		setIsModalOpen(true);
 	};
+
 	return (
 		<div>
 			<Button type="primary" onClick={showModal}>

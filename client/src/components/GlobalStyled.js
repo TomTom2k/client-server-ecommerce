@@ -23,7 +23,7 @@ const GlobalStyle = createGlobalStyle`
 		--secondary-background: #fff;
 
 		--text-900: #100e34;
-		--text-700: #e1dee6;
+		--text-700: #454c53;
 		--text-100: #e6e9ed;
 		--text-50: #f5f7fa;
 
@@ -32,7 +32,12 @@ const GlobalStyle = createGlobalStyle`
 		--white: #fff;
 
 		--width-aside: 15rem;
-		--max-width-default-layout: 71rem;
+		--max-width-default-layout: 75rem;
+
+		--max-width-large: 1200px;
+		--max-width-laptop: 992px;
+		--max-width-table: 768px;
+		--max-width-mobile: 600px;
 	}
 
 	* {
@@ -47,6 +52,10 @@ const GlobalStyle = createGlobalStyle`
 	body {
 		line-height: 1.5;
 		text-rendering: optimizeSpeed;
+
+		@media (max-width: 768px) {
+			font-size: 62.5%;
+		}
 	}
 
 	// scrollbar
@@ -65,7 +74,6 @@ const GlobalStyle = createGlobalStyle`
 		background-color: rgba(0, 0, 0, 0);
 	}
 
-	${'' /*  */}
 	button, input {
 		border: none;
 		outline: none;

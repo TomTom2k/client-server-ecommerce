@@ -3,6 +3,7 @@ import configs from '../configs';
 
 import Home from '../pages/Home';
 import List from '../pages/List';
+import ProductDetail from '../pages/ProductDetail';
 import Contact from '../pages/Contact';
 import Intro from '../pages/Intro';
 import Account from '../pages/Account';
@@ -17,6 +18,7 @@ import ManageAccounts from '../pages/Admin/ManageAccounts';
 const publicRoutes = [
 	{ path: configs.routes.home, component: Home },
 	{ path: configs.routes.list, component: List },
+	{ path: configs.routes.productDetail + ':id', component: ProductDetail },
 	{ path: configs.routes.contact, component: Contact },
 	{ path: configs.routes.intro, component: Intro },
 	{ path: configs.routes.account, component: Account, layout: null },

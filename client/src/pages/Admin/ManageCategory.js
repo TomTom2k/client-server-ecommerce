@@ -17,8 +17,9 @@ const ManageCategory = () => {
 	useEffect(() => {
 		dispatch(categoryActions.getCategories.getCategoriesRequest());
 	}, [dispatch]);
-	const showModal = () => {
-		setIsModalOpen(true);
+
+	const confirm = (e) => {
+		dispatch(categoryActions.deleteCategory.deleteCategoryRequest(e));
 	};
 	const handleCancel = () => {
 		setIsModalOpen(false);
@@ -27,9 +28,8 @@ const ManageCategory = () => {
 		dispatch(categoryActions.createCategory.createCategoryRequest(values));
 		setIsModalOpen(false);
 	};
-
-	const confirm = (e) => {
-		dispatch(categoryActions.deleteCategory.deleteCategoryRequest(e));
+	const showModal = () => {
+		setIsModalOpen(true);
 	};
 
 	return (

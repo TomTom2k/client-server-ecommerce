@@ -1,5 +1,6 @@
 const Category = require('../models/category');
 const Product = require('../models/product');
+
 // [GET] /Category
 const getAllCategory = async (req, res, next) => {
 	try {
@@ -15,8 +16,9 @@ const createCategory = async (req, res, next) => {
 	try {
 		const newCategory = req.body;
 		const category = new Category(newCategory);
+
 		await category.save();
-		return res.status(201).json({ Category: 'CREATE SUCCESS' });
+		return res.status(201).json(category);
 	} catch (error) {
 		next(error);
 	}
@@ -26,8 +28,9 @@ const createCategory = async (req, res, next) => {
 const deleteCategory = async (req, res, next) => {
 	try {
 		let id = req.params.id;
-		await Category.findByIdAndRemove(id);
 
+		await Category.findByIdAndRemove(id);
+		// delete category field when category is deleted
 		await Product.updateMany({ category: id }, { $unset: { category: 1 } });
 		return res.status(201).json({ brand: 'DELETE SUCCESS' });
 	} catch (error) {

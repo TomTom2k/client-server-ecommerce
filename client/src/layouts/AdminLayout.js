@@ -6,6 +6,7 @@ import AsideAdmin from './components/AsideAdmin';
 const WrapperStyled = styled.div`
 	display: flex;
 `;
+
 const AsideStyled = styled.aside`
 	width: var(--width-aside);
 `;

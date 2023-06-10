@@ -21,9 +21,26 @@ const getAllProduct = async (req, res, next) => {
 const getProductDetail = async (req, res, next) => {
 	try {
 		let id = req.params.id;
-		let products = await Product.findById(id)
+		let product = await Product.findById(id)
 			.populate('brand')
 			.populate('category');
+		return res.status(200).json(product);
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [GET] /products/list-submit
+const getProductsSubmit = async (req, res, next) => {
+	try {
+		const title = req.query.q || '';
+		let products = await Product.find({
+			title: { $regex: title, $options: 'i' },
+			status: 'ACCEPT',
+		})
+			.populate('brand', 'title')
+			.populate('category', 'name')
+			.select('title images price stock brand category status');
 		return res.status(200).json(products);
 	} catch (error) {
 		next(error);
@@ -91,6 +108,7 @@ const updateStatus = async (req, res, next) => {
 	try {
 		const id = req.params.id;
 		const body = req.body;
+
 		await Product.findByIdAndUpdate(id, body);
 		return res.status(201).json("product: 'UPDATE STATUS SUCCESS'");
 	} catch (error) {
@@ -100,7 +118,8 @@ const updateStatus = async (req, res, next) => {
 
 module.exports = {
 	getAllProduct,
-	createProduct,
 	getProductDetail,
+	getProductsSubmit,
+	createProduct,
 	updateStatus,
 };

@@ -1,7 +1,6 @@
-const path = require('path');
-
 const Brand = require('../models/brand');
 const Product = require('../models/product');
+
 // [GET] /brand
 const getAllBrand = async (req, res, next) => {
 	try {
@@ -18,6 +17,7 @@ const createBrand = async (req, res, next) => {
 		const newBrand = req.body;
 		const file = req.file;
 		const brand = new Brand(newBrand);
+
 		if (file) {
 			brand.description = file.path.replace(
 				'public\\markdown\\',
@@ -26,7 +26,7 @@ const createBrand = async (req, res, next) => {
 		}
 
 		await brand.save();
-		return res.status(201).json({ brand: 'CREATE SUCCESS' });
+		return res.status(201).json({ brand });
 	} catch (error) {
 		next(error);
 	}
@@ -37,6 +37,7 @@ const updateBrand = async (req, res, next) => {
 	try {
 		const id = req.params.id;
 		const body = req.body;
+
 		await Brand.findByIdAndUpdate(id, body);
 		return res.status(201).json({ brand: 'UPDATE SUCCESS' });
 	} catch (error) {
@@ -48,8 +49,9 @@ const updateBrand = async (req, res, next) => {
 const deleteBrand = async (req, res, next) => {
 	try {
 		let id = req.params.id;
-		await Brand.findByIdAndRemove(id);
 
+		await Brand.findByIdAndRemove(id);
+		// The product will be deleted when the brand is no longer available
 		await Product.deleteMany({ brand: id });
 		return res.status(201).json({ brand: 'DELETE SUCCESS' });
 	} catch (error) {

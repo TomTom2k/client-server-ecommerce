@@ -32,7 +32,6 @@ const ManageProducts = () => {
 	const handlerSubmit = (values) => {
 		setIsModalOpen(false);
 	};
-
 	const handlerUpdateStatus = (id, status) => {
 		dispatch(
 			productActions.updateStatus.updateStatusRequest({
