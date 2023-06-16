@@ -17,19 +17,6 @@ const getAllProduct = async (req, res, next) => {
 	}
 };
 
-// [GET] /products/:id
-const getProductDetail = async (req, res, next) => {
-	try {
-		let id = req.params.id;
-		let product = await Product.findById(id)
-			.populate('brand')
-			.populate('category');
-		return res.status(200).json(product);
-	} catch (error) {
-		next(error);
-	}
-};
-
 // [GET] /products/list-submit
 const getProductsSubmit = async (req, res, next) => {
 	try {
@@ -42,6 +29,19 @@ const getProductsSubmit = async (req, res, next) => {
 			.populate('category', 'name')
 			.select('title images price stock brand category status');
 		return res.status(200).json(products);
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [GET] /products/:id
+const getProductDetail = async (req, res, next) => {
+	try {
+		let { id } = req.values.params;
+		let product = await Product.findById(id)
+			.populate('brand')
+			.populate('category');
+		return res.status(200).json(product);
 	} catch (error) {
 		next(error);
 	}
@@ -106,7 +106,7 @@ const createProduct = async (req, res, next) => {
 // [PATCH] /products/:id
 const updateStatus = async (req, res, next) => {
 	try {
-		const id = req.params.id;
+		const { id } = req.values.params;
 		const body = req.body;
 
 		await Product.findByIdAndUpdate(id, body);
@@ -118,8 +118,8 @@ const updateStatus = async (req, res, next) => {
 
 module.exports = {
 	getAllProduct,
-	getProductDetail,
 	getProductsSubmit,
+	getProductDetail,
 	createProduct,
 	updateStatus,
 };

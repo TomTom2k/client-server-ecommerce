@@ -8,12 +8,13 @@ const {
 	updateStatus,
 	getProductsSubmit,
 } = require('../controllers/productController');
+const { schemas, validateParam } = require('../helpers/routerHelpers');
 
 const router = express.Router();
 
 router.get('/', getAllProduct);
 router.get('/list-submit', getProductsSubmit);
-router.get('/:id', getProductDetail);
+router.get('/:id', validateParam(schemas.idSchema, 'id'), getProductDetail);
 router.post(
 	'/',
 	upload.fields([
@@ -22,6 +23,6 @@ router.post(
 	]),
 	createProduct
 );
-router.patch('/:id', updateStatus);
+router.patch('/:id', validateParam(schemas.idSchema, 'id'), updateStatus);
 
 module.exports = router;

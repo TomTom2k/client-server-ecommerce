@@ -35,7 +35,7 @@ const createBrand = async (req, res, next) => {
 // [PATCH] /brand/:id
 const updateBrand = async (req, res, next) => {
 	try {
-		const id = req.params.id;
+		const { id } = req.value.params;
 		const body = req.body;
 
 		await Brand.findByIdAndUpdate(id, body);
@@ -48,7 +48,7 @@ const updateBrand = async (req, res, next) => {
 // [DELETE] /brand/:id
 const deleteBrand = async (req, res, next) => {
 	try {
-		let id = req.params.id;
+		const { id } = req.value.params;
 
 		await Brand.findByIdAndRemove(id);
 		// The product will be deleted when the brand is no longer available

@@ -27,7 +27,7 @@ const createCategory = async (req, res, next) => {
 // [DELETE] /Category/:id
 const deleteCategory = async (req, res, next) => {
 	try {
-		let id = req.params.id;
+		let { id } = req.values.params;
 
 		await Category.findByIdAndRemove(id);
 		// delete category field when category is deleted
