@@ -54,7 +54,6 @@ const createProduct = async (req, res, next) => {
 		const images = req.files.images;
 		const newProduct = req.body;
 		const product = new Product(newProduct);
-
 		// List of file extensions to convert to WebP
 		const fileExtensions = ['png', 'jpg', 'jpeg', 'gif'];
 

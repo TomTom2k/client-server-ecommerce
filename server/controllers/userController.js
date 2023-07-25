@@ -29,10 +29,18 @@ const authGoogle = async (req, res, next) => {
 
 const secret = async (req, res, next) => {
 	try {
-		const token = encodedToken(req.user._id);
+		const { email, firstName, lastName, phoneNumber, addresses, role } =
+			req.user;
+		const user = {
+			email,
+			firstName,
+			lastName,
+			phoneNumber,
+			addresses,
+			role,
+		};
 
-		res.setHeader('Authorization', token);
-		return res.status(200).json({ success: true });
+		return res.status(200).json({ user });
 	} catch (error) {
 		next(error);
 	}
@@ -40,8 +48,7 @@ const secret = async (req, res, next) => {
 
 const signIn = async (req, res, next) => {
 	try {
-		const token = encodedToken(req.user._id);
-
+		const token = encodedToken(req.user.email);
 		res.setHeader('Authorization', token);
 		res.status(200).json({ success: true });
 	} catch (error) {

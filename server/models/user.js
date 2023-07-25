@@ -27,6 +27,11 @@ const UserSchema = mongoose.Schema({
 		enum: ['local', 'google', 'facebook'],
 		default: 'local',
 	},
+	role: {
+		type: String,
+		enum: ['user', 'staff', 'admin'],
+		default: 'user',
+	},
 });
 
 // hash password before save to database
