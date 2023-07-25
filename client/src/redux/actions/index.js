@@ -8,3 +8,4 @@ export const getType = (reduxAction) => {
 export * as brandActions from './brand';
 export * as categoryActions from './category';
 export * as productActions from './product';
+export * as userActions from './user';

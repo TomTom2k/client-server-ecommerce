@@ -14,4 +14,9 @@ export const INIT_STATE = {
 		products: [],
 		productsSubmit: [],
 	},
+
+	user: {
+		isLoading: false,
+		data: null,
+	},
 };

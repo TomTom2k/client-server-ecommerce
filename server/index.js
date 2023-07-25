@@ -4,6 +4,8 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const swaggerJsdoc = require('swagger-jsdoc');
+const swaggerUi = require('swagger-ui-express');
 
 const router = require('./routes');
 
@@ -28,6 +30,27 @@ mongoose
 	})
 	.then((res) => console.log('> Connected...'))
 	.catch((err) => console.log(`> Error while connecting to mongoDB`));
+
+// swagger
+const options = {
+	definition: {
+		openapi: '3.1.0',
+		info: {
+			title: 'e-Commerce api ',
+			version: '0.1.0',
+			description: 'API for e-Commerce website',
+		},
+		servers: [
+			{
+				url: 'http://localhost:5000',
+			},
+		],
+	},
+	apis: ['./helpers/swagger/*.js'],
+};
+
+const specs = swaggerJsdoc(options);
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 
 // route
 app.use('/', router);

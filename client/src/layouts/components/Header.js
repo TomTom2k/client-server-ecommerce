@@ -1,4 +1,5 @@
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 import styled from 'styled-components';
@@ -75,7 +76,8 @@ const TopHeaderStyled = styled.div`
 `;
 
 const Header = () => {
-	const user = true;
+	const auth = useSelector((state) => state.user.data);
+
 	return (
 		<WrapperStyled>
 			<ContainerTopHeaderStyled>
@@ -88,7 +90,7 @@ const Header = () => {
 							label="Giỏ hàng"
 							href={configs.routes.cart}
 						/>
-						{user ? (
+						{!!auth ? (
 							<Button
 								icon={<HiUser />}
 								label="ThanhTin"

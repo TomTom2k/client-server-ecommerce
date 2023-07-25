@@ -35,7 +35,6 @@ export function* deleteCategorySaga(action) {
 			categoryActions.deleteCategory.deleteCategorySuccess(categoryId)
 		);
 	} catch (error) {
-		console.log(error);
 		yield put(categoryActions.deleteCategory.deleteCategoryFailure(error));
 	}
 }

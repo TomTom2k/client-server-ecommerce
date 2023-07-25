@@ -17,6 +17,7 @@ router.post(
 	passport.authenticate('google-plus-token', { session: false }),
 	authGoogle
 );
+
 router.post(
 	'/sign-in',
 	validateBody(schemas.authSignInSchema),
