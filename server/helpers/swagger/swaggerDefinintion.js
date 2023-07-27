@@ -36,6 +36,11 @@
 /**
  * @swagger
  * components:
+ *   securitySchemes:
+ *     BearerAuth:        
+ *       type: http
+ *       scheme: bearer
+ *       bearerFormat: JWT 
  *   schemas:
  *     Brand:
  *       type: object

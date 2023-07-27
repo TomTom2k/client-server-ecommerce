@@ -7,12 +7,21 @@ const storage = multer.diskStorage({
 			'image/png': 'images',
 			'image/jpg': 'images',
 			'text/markdown': 'markdown',
+			'application/octet-stream': 'markdown',
 		};
 		const uploadPath = 'public/' + fileTypes[file.mimetype];
 		cb(null, uploadPath);
 	},
 	filename: function (req, file, cb) {
-		const extension = file.mimetype.split('/')[1];
+		let extension;
+		if (
+			file.mimetype === 'text/markdown' ||
+			file.mimetype === 'application/octet-stream'
+		) {
+			extension = 'markdown';
+		} else {
+			extension = file.mimetype.split('/')[1];
+		}
 		cb(null, `${file.fieldname}-${Date.now()}.${extension}`);
 	},
 });

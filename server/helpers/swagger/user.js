@@ -1,6 +1,6 @@
 /**
  * @swagger
- * /auth/google:
+ * /user/auth/google:
  *   post:
  *     summary: Authenticate with Google.
  *     tags: [Users]
@@ -16,7 +16,7 @@
 
 /**
  * @swagger
- * /secret:
+ * /user/secret:
  *   get:
  *     summary: Retrieve a secret.
  *     tags: [Users]
@@ -32,10 +32,27 @@
 
 /**
  * @swagger
- * /signIn:
+ * /user/sign-in:
  *   post:
  *     summary: Sign in a user.
  *     tags: [Users]
+ *     consumes:
+ *       - application/json
+ *     requestBody:
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - password
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The email of the user to authenticate.
+ *               password:
+ *                 type: string
+ *                 description: The user's password.
  *     responses:
  *       '200':
  *         description: Successful operation.
@@ -48,7 +65,7 @@
 
 /**
  * @swagger
- * /signUp:
+ * /user/signUp:
  *   post:
  *     summary: Sign up a new user.
  *     tags: [Users]

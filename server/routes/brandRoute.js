@@ -27,6 +27,7 @@ router.patch(
 	authRoute(['staff', 'admin']),
 	validateParam(schemas.idSchema, 'id'),
 	validateParam(schemas.idSchema, 'id'),
+	upload.single('description'),
 	updateBrand
 );
 router.delete(

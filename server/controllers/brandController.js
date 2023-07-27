@@ -1,3 +1,5 @@
+const fs = require('fs');
+const path = require('path');
 const Brand = require('../models/brand');
 const Product = require('../models/product');
 
@@ -16,6 +18,7 @@ const createBrand = async (req, res, next) => {
 	try {
 		const newBrand = req.body;
 		const file = req.file;
+
 		const brand = new Brand(newBrand);
 
 		if (file) {
@@ -37,6 +40,32 @@ const updateBrand = async (req, res, next) => {
 	try {
 		const { id } = req.value.params;
 		const body = req.body;
+		const file = req.file;
+
+		// get brand from database
+		const brand = await Brand.findById(id);
+
+		// Check if there are file uploads
+		if (file) {
+			// Delete the description file if it exists
+			if (brand.description) {
+				fs.unlink(
+					path.join(__dirname, '..', 'public', brand.description),
+					(err) => {
+						if (err) {
+							console.error(err);
+							return;
+						}
+					}
+				);
+			}
+
+			// Update file path in description field
+			body.description = file.path.replace(
+				'public\\markdown\\',
+				'markdown/'
+			);
+		}
 
 		await Brand.findByIdAndUpdate(id, body);
 		return res.status(201).json({ brand: 'UPDATE SUCCESS' });

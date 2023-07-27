@@ -23,24 +23,25 @@
  *   post:
  *     summary: Create a new brand.
  *     tags: [Brands]
- *     consumes:
- *       - multipart/form-data
- *     parameters:
- *       - in: formData
- *         name: title
- *         description: Brand title.
- *         required: true
- *         type: string
- *       - in: formData
- *         name: summary
- *         description: Brand summary.
- *         required: true
- *         type: string
- *       - in: formData
- *         name: description
- *         description: Brand description (file upload).
- *         required: false
- *         type: file
+ *     security:
+ *      - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Brand title.
+ *               summary:
+ *                 type: string
+ *                 description: Brand summary.
+ *               description:
+ *                 type: string
+ *                 format: binary
+ *                 description: Brand description (file upload).
  *     responses:
  *       '201':
  *         description: The created brand.
@@ -48,6 +49,7 @@
  *           application/json:
  *             schema:
  *               $ref: '#/components/schemas/Brand'
+ *
  */
 
 // [PATCH] /brand/:id
@@ -57,28 +59,41 @@
  *   patch:
  *     summary: Update a brand by ID.
  *     tags: [Brands]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         description: Brand ID.
  *         required: true
- *         type: string
- *       - in: body
- *         name: brand
- *         description: Updated brand object.
- *         required: true
  *         schema:
- *           $ref: '#/components/schemas/Brand'
+ *           type: string
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: Brand title.
+ *                 required: false
+ *               summary:
+ *                 type: string
+ *                 description: Brand summary.
+ *                 required: false
+ *               description:
+ *                 type: string
+ *                 format: binary
+ *                 description: Brand description (file upload).
  *     responses:
  *       '201':
  *         description: Success message.
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 brand:
- *                   type: string
+ *               $ref: '#/components/schemas/Brand'
  */
 
 // [DELETE] /brand/:id
@@ -88,14 +103,17 @@
  *   delete:
  *     summary: Delete a brand by ID.
  *     tags: [Brands]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
  *         description: Brand ID.
  *         required: true
- *         type: string
+ *         schema:
+ *           type: string
  *     responses:
- *       '201':
+ *       '200':
  *         description: Success message.
  *         content:
  *           application/json:
