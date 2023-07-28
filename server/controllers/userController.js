@@ -16,12 +16,77 @@ const encodedToken = (email) => {
 };
 
 // control
+const addUserAddress = async (req, res, next) => {
+	try {
+		const { street, district, city } = req.body;
+		const userId = req.user._id; //
+		console.log(req.body);
+		// Create a new address
+		const newAddress = {
+			street,
+			district,
+			city,
+		};
+
+		// Find the user and update
+		const user = await User.findById(userId);
+		user.addresses.push(newAddress);
+		await user.save();
+
+		res.json({
+			message: 'Address added successfully!',
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
 const authGoogle = async (req, res, next) => {
 	try {
 		const token = encodedToken(req.user._id);
 
 		res.setHeader('Authorization', token);
 		return res.status(200).json({ success: true });
+	} catch (error) {
+		next(error);
+	}
+};
+
+const deleteUserAddress = async (req, res) => {
+	try {
+		const { addressId } = req.params;
+		const userId = req.user._id;
+
+		// Pull the address from the user's addresses array
+		const user = await User.findByIdAndUpdate(
+			userId,
+			{ $pull: { addresses: { _id: addressId } } },
+			{ new: true } // This option returns the updated document
+		);
+
+		// Check if the address was found and removed
+		if (!user) {
+			return res.status(400).json({ message: 'Address not found.' });
+		}
+
+		// Send response
+		res.json({
+			message: 'Address deleted successfully!',
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+const getAddresses = async (req, res) => {
+	try {
+		const userId = req.user._id;
+		const user = await User.findById(userId);
+
+		// Send response
+		res.json({
+			addresses: user.addresses, // This will now include the list of addresses.
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -90,7 +155,10 @@ const signUp = async (req, res, next) => {
 };
 
 module.exports = {
+	addUserAddress,
 	authGoogle,
+	deleteUserAddress,
+	getAddresses,
 	secret,
 	signIn,
 	signUp,

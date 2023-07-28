@@ -8,7 +8,7 @@ const {
 } = require('../controllers/brandController');
 require('../middleware/passport');
 
-const upload = require('../helpers/uploadMiddleware');
+const upload = require('../middleware/uploadMiddleware');
 const { authRoute } = require('../middleware/auth');
 const passport = require('passport');
 const { schemas, validateParam } = require('../helpers/routerHelpers');

@@ -18,7 +18,7 @@ const createCategory = async (req, res, next) => {
 		const category = new Category(newCategory);
 
 		await category.save();
-		return res.status(201).json(category);
+		return res.status(201).json({ category: 'create SUCCESS' });
 	} catch (error) {
 		next(error);
 	}
@@ -27,12 +27,12 @@ const createCategory = async (req, res, next) => {
 // [DELETE] /Category/:id
 const deleteCategory = async (req, res, next) => {
 	try {
-		let { id } = req.values.params;
+		let { id } = req.value.params;
 
 		await Category.findByIdAndRemove(id);
 		// delete category field when category is deleted
 		await Product.updateMany({ category: id }, { $unset: { category: 1 } });
-		return res.status(201).json({ brand: 'DELETE SUCCESS' });
+		return res.status(201).json({ category: 'DELETE SUCCESS' });
 	} catch (error) {
 		next(error);
 	}

@@ -37,7 +37,7 @@ const getProductsSubmit = async (req, res, next) => {
 // [GET] /products/:id
 const getProductDetail = async (req, res, next) => {
 	try {
-		let { id } = req.values.params;
+		let { id } = req.value.params;
 		let product = await Product.findById(id)
 			.populate('brand')
 			.populate('category');
@@ -105,11 +105,11 @@ const createProduct = async (req, res, next) => {
 // [PATCH] /products/:id
 const updateStatus = async (req, res, next) => {
 	try {
-		const { id } = req.values.params;
+		const { id } = req.value.params;
 		const body = req.body;
 
 		await Product.findByIdAndUpdate(id, body);
-		return res.status(201).json("product: 'UPDATE STATUS SUCCESS'");
+		return res.status(201).json({ product: 'UPDATE STATUS SUCCESS' });
 	} catch (error) {
 		next(error);
 	}

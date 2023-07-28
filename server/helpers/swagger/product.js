@@ -1,9 +1,11 @@
 /**
  * @swagger
- * /products:
+ * /product:
  *   get:
  *     summary: Get all products.
  *     tags: [Products]
+ *     security:
+ *      - BearerAuth: []
  *     responses:
  *       '200':
  *         description: A list of products.
@@ -17,7 +19,7 @@
 
 /**
  * @swagger
- * /products/list-submit:
+ * /product/list-submit:
  *   get:
  *     summary: Get all products that are accepted.
  *     tags: [Products]
@@ -34,7 +36,7 @@
 
 /**
  * @swagger
- * /products/{id}:
+ * /product/{id}:
  *   get:
  *     summary: Get details of a specific product.
  *     tags: [Products]
@@ -55,19 +57,50 @@
 
 /**
  * @swagger
- * /products:
+ * /product:
  *   post:
  *     summary: Create a new product.
  *     tags: [Products]
- *     consumes:
- *       - multipart/form-data
- *     parameters:
- *       - in: formData
- *         name: product
- *         description: Product object to be added.
- *         required: true
- *         schema:
- *           $ref: '#/components/schemas/Product'
+ *     security:
+ *      - BearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         multipart/form-data:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               title:
+ *                 type: string
+ *                 description: The title of the product.
+ *               price:
+ *                 type: number
+ *                 description: The price of the product.
+ *               stock:
+ *                 type: number
+ *                 description: The stock count of the product.
+ *               brand:
+ *                 type: string
+ *                 format: uuid
+ *                 description: The reference to the Brand object.
+ *               category:
+ *                 type: string
+ *                 format: uuid
+ *                 description: The reference to the Category object.
+ *               status:
+ *                 type: string
+ *                 enum: ['SUBMIT', 'ACCEPT', 'CANCEL']
+ *                 description: The status of the product.
+ *               images:
+ *                 type: array
+ *                 items:
+ *                   type: string
+ *                   format: binary
+ *                 description: An array of image files.
+ *               description:
+ *                 type: string
+ *                 format: binary
+ *                 description: A markdown file for product description.
  *     responses:
  *       '201':
  *         description: The created product.
@@ -79,10 +112,12 @@
 
 /**
  * @swagger
- * /products/{id}:
+ * /product/{id}:
  *   patch:
  *     summary: Update the status of a product by ID.
  *     tags: [Products]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id

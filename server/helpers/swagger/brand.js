@@ -113,13 +113,10 @@
  *         schema:
  *           type: string
  *     responses:
- *       '200':
+ *       '201':
  *         description: Success message.
  *         content:
  *           application/json:
  *             schema:
- *               type: object
- *               properties:
- *                 brand:
- *                   type: string
+ *               $ref: '#/components/schemas/Brand'
  */

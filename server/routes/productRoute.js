@@ -1,6 +1,6 @@
 const express = require('express');
 
-const upload = require('../helpers/uploadMiddleware');
+const upload = require('../middleware/uploadMiddleware');
 const {
 	getAllProduct,
 	createProduct,
@@ -32,6 +32,12 @@ router.post(
 	]),
 	createProduct
 );
-router.patch('/:id', validateParam(schemas.idSchema, 'id'), updateStatus);
+router.patch(
+	'/:id',
+	passport.authenticate('jwt', { session: false }),
+	authRoute(['staff', 'admin']),
+	validateParam(schemas.idSchema, 'id'),
+	updateStatus
+);
 
 module.exports = router;

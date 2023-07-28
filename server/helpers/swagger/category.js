@@ -23,6 +23,8 @@
  *   post:
  *     summary: Create a new category.
  *     tags: [Categories]
+ *     security:
+ *      - BearerAuth: []
  *     requestBody:
  *       required: true
  *       content:
@@ -41,10 +43,12 @@
 // [DELETE] /Category/:id
 /**
  * @swagger
- * /Category/{id}:
+ * /category/{id}:
  *   delete:
  *     summary: Delete a category by ID.
  *     tags: [Categories]
+ *     security:
+ *      - BearerAuth: []
  *     parameters:
  *       - in: path
  *         name: id
@@ -56,8 +60,6 @@
  *         description: Success message.
  *         content:
  *           application/json:
- *             schema:
- *               type: object
- *               properties:
- *                 brand:
+ *              schema:
+ *               $ref: '#/components/schemas/Category'
  */

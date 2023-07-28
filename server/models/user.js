@@ -13,7 +13,7 @@ const UserSchema = mongoose.Schema({
 	password: String,
 	email: { type: String, required: true, unique: true },
 	phoneNumber: String,
-	addresses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Address' }],
+	addresses: [address],
 	authGoogleID: {
 		type: String,
 		default: null,

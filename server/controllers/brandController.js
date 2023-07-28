@@ -29,7 +29,7 @@ const createBrand = async (req, res, next) => {
 		}
 
 		await brand.save();
-		return res.status(201).json({ brand });
+		return res.status(201).json({ brand: 'CREATE SUCCESS' });
 	} catch (error) {
 		next(error);
 	}
