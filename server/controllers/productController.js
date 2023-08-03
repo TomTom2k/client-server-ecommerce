@@ -4,49 +4,6 @@ const path = require('path');
 
 const Product = require('../models/product');
 
-// [GET] /products
-const getAllProduct = async (req, res, next) => {
-	try {
-		let products = await Product.find({})
-			.populate('brand', 'title')
-			.populate('category', 'name')
-			.select('title images price stock brand category status');
-		return res.status(200).json(products);
-	} catch (error) {
-		next(error);
-	}
-};
-
-// [GET] /products/list-submit
-const getProductsSubmit = async (req, res, next) => {
-	try {
-		const title = req.query.q || '';
-		let products = await Product.find({
-			title: { $regex: title, $options: 'i' },
-			status: 'ACCEPT',
-		})
-			.populate('brand', 'title')
-			.populate('category', 'name')
-			.select('title images price stock brand category status');
-		return res.status(200).json(products);
-	} catch (error) {
-		next(error);
-	}
-};
-
-// [GET] /products/:id
-const getProductDetail = async (req, res, next) => {
-	try {
-		let { id } = req.value.params;
-		let product = await Product.findById(id)
-			.populate('brand')
-			.populate('category');
-		return res.status(200).json(product);
-	} catch (error) {
-		next(error);
-	}
-};
-
 // [POST] /products
 const createProduct = async (req, res, next) => {
 	try {
@@ -96,7 +53,58 @@ const createProduct = async (req, res, next) => {
 		}
 
 		await product.save();
-		return res.status(201).json({ product });
+		return res
+			.status(201)
+			.json({ message: 'Product created successfully', product });
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [GET] /products
+const getAllProduct = async (req, res, next) => {
+	try {
+		let products = await Product.find({})
+			.populate('brand', 'title')
+			.populate('category', 'name')
+			.select('title images price stock brand category status');
+		return res
+			.status(200)
+			.json({ message: 'Products fetched successfully', products });
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [GET] /products/list-submit
+const getProductsSubmit = async (req, res, next) => {
+	try {
+		const title = req.query.q || '';
+		let products = await Product.find({
+			title: { $regex: title, $options: 'i' },
+			status: 'ACCEPT',
+		})
+			.populate('brand', 'title')
+			.populate('category', 'name')
+			.select('title images price stock brand category status');
+		return res
+			.status(200)
+			.json({ message: 'Product fetched successfully', products });
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [GET] /products/:id
+const getProductDetail = async (req, res, next) => {
+	try {
+		let { id } = req.value.params;
+		let product = await Product.findById(id)
+			.populate('brand')
+			.populate('category');
+		return res
+			.status(200)
+			.json({ message: 'Product fetched successfully', product });
 	} catch (error) {
 		next(error);
 	}
@@ -108,17 +116,19 @@ const updateStatus = async (req, res, next) => {
 		const { id } = req.value.params;
 		const body = req.body;
 
-		await Product.findByIdAndUpdate(id, body);
-		return res.status(201).json({ product: 'UPDATE STATUS SUCCESS' });
+		const product = await Product.findByIdAndUpdate(id, body);
+		return res
+			.status(201)
+			.json({ message: 'Product update successfully', product });
 	} catch (error) {
 		next(error);
 	}
 };
 
 module.exports = {
+	createProduct,
 	getAllProduct,
 	getProductsSubmit,
 	getProductDetail,
-	createProduct,
 	updateStatus,
 };

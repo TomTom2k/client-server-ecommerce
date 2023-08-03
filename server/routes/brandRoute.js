@@ -26,7 +26,6 @@ router.patch(
 	passport.authenticate('jwt', { session: false }),
 	authRoute(['staff', 'admin']),
 	validateParam(schemas.idSchema, 'id'),
-	validateParam(schemas.idSchema, 'id'),
 	upload.single('description'),
 	updateBrand
 );

@@ -35,6 +35,7 @@ const addUserAddress = async (req, res, next) => {
 
 		res.json({
 			message: 'Address added successfully!',
+			addresses: user.addresses,
 		});
 	} catch (error) {
 		next(error);
@@ -46,7 +47,7 @@ const authGoogle = async (req, res, next) => {
 		const token = encodedToken(req.user._id);
 
 		res.setHeader('Authorization', token);
-		return res.status(200).json({ success: true });
+		return res.status(200).json({ message: 'Login successfully!' });
 	} catch (error) {
 		next(error);
 	}
@@ -85,6 +86,7 @@ const getAddresses = async (req, res) => {
 
 		// Send response
 		res.json({
+			message: 'Address fetched successfully!',
 			addresses: user.addresses, // This will now include the list of addresses.
 		});
 	} catch (error) {
@@ -105,7 +107,10 @@ const secret = async (req, res, next) => {
 			role,
 		};
 
-		return res.status(200).json({ user });
+		return res.status(200).json({
+			message: 'User fetched successfully!',
+			user: user,
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -115,7 +120,9 @@ const signIn = async (req, res, next) => {
 	try {
 		const token = encodedToken(req.user.email);
 		res.setHeader('Authorization', token);
-		res.status(200).json({ success: true });
+		res.status(200).json({
+			message: 'User login successfully!',
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -148,7 +155,9 @@ const signUp = async (req, res, next) => {
 		const token = encodedToken(newUser.email);
 
 		res.setHeader('auth', token);
-		return res.status(200).json({ success: true });
+		return res.status(200).json({
+			message: 'User register successfully!',
+		});
 	} catch (error) {
 		next(error);
 	}

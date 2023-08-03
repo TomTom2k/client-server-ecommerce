@@ -29,6 +29,13 @@
 /**
  * @swagger
  * tags:
+ *   name: Orders
+ *   description: API endpoints related to orders.
+ */
+
+/**
+ * @swagger
+ * tags:
  *   name: Users
  *   description: API to manage users
  */
@@ -37,10 +44,10 @@
  * @swagger
  * components:
  *   securitySchemes:
- *     BearerAuth:        
+ *     BearerAuth:
  *       type: http
  *       scheme: bearer
- *       bearerFormat: JWT 
+ *       bearerFormat: JWT
  *   schemas:
  *     Brand:
  *       type: object
@@ -160,5 +167,35 @@
  *           enum: [local, google, facebook]
  *           description: Authentication type.
  *           default: local
-
+ *     Order:
+ *       type: object
+ *       properties:
+ *         userId:
+ *           type: string
+ *           description: The ID of the user who created the order.
+ *         products:
+ *           type: array
+ *           items:
+ *             $ref: '#/components/schemas/OrderItem'
+ *           description: An array of products in the order.
+ *         total:
+ *           type: number
+ *           description: The total cost of the order.
+ *           minimum: 0
+ *         status:
+ *           type: string
+ *           description: The status of the order.
+ *           enum: ['Pending', 'Transit', 'Delivered', 'Cancelled']
+ *           default: 'Pending'
+ *         addressId:
+ *           type: string
+ *           description: The ID of the address to deliver the order to.
+ *         created_at:
+ *           type: string
+ *           format: date-time
+ *           description: The date/time the order was created.
+ *         updated_at:
+ *           type: string
+ *           format: date-time
+ *           description: The date/time the order was last updated.
  */

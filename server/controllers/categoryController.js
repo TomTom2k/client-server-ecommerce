@@ -1,15 +1,6 @@
+const category = require('../models/category');
 const Category = require('../models/category');
 const Product = require('../models/product');
-
-// [GET] /Category
-const getAllCategory = async (req, res, next) => {
-	try {
-		const category = await Category.find({});
-		return res.status(200).json(category);
-	} catch (error) {
-		next(error);
-	}
-};
 
 // [POST] /Category
 const createCategory = async (req, res, next) => {
@@ -18,7 +9,23 @@ const createCategory = async (req, res, next) => {
 		const category = new Category(newCategory);
 
 		await category.save();
-		return res.status(201).json({ category: 'create SUCCESS' });
+		return res.status(201).json({
+			message: 'Category created successfully',
+			order: category,
+		});
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [GET] /Category
+const getAllCategory = async (req, res, next) => {
+	try {
+		const category = await Category.find({});
+		return res.status(200).json({
+			message: 'Category fetched successfully',
+			order: category,
+		});
 	} catch (error) {
 		next(error);
 	}
@@ -32,14 +39,32 @@ const deleteCategory = async (req, res, next) => {
 		await Category.findByIdAndRemove(id);
 		// delete category field when category is deleted
 		await Product.updateMany({ category: id }, { $unset: { category: 1 } });
-		return res.status(201).json({ category: 'DELETE SUCCESS' });
+		return res
+			.status(201)
+			.json({ message: 'Category deleted successfully' });
+	} catch (error) {
+		next(error);
+	}
+};
+
+// [PATCH] /brand/:id
+const updateCategory = async (req, res, next) => {
+	try {
+		const { id } = req.value.params;
+		const body = req.body;
+
+		category = await Brand.findByIdAndUpdate(id, body);
+		return res
+			.status(201)
+			.json({ message: 'Category updated successfully', category });
 	} catch (error) {
 		next(error);
 	}
 };
 
 module.exports = {
-	getAllCategory,
 	createCategory,
 	deleteCategory,
+	getAllCategory,
+	updateCategory,
 };
