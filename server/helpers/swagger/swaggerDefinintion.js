@@ -70,20 +70,34 @@
  *           description: Category description.
  *     Comment:
  *       type: object
+ *       required:
+ *         - userId
+ *         - rate
+ *         - productId
  *       properties:
+ *         userId:
+ *           type: string
+ *           description: ID of the user who made the comment.
  *         rate:
  *           type: number
- *           description: Comment rate.
+ *           description: Rating given by the user.
  *           minimum: 0
  *           maximum: 5
- *           required: true
  *         content:
  *           type: string
  *           description: Comment content.
- *         product:
+ *         productId:
  *           type: string
- *           description: ID of the related product.
- *           required: true
+ *           description: ID of the product being commented on.
+ *         createdAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time when the comment was created.
+ *         updatedAt:
+ *           type: string
+ *           format: date-time
+ *           description: The date and time when the comment was last updated.
+ 
  *     Product:
  *       type: object
  *       properties:

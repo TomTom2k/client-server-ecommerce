@@ -4,7 +4,7 @@ const path = require('path');
 
 const Product = require('../models/product');
 
-// [POST] /products
+// [POST] /product
 const createProduct = async (req, res, next) => {
 	try {
 		const description = req.files.description;
@@ -61,13 +61,13 @@ const createProduct = async (req, res, next) => {
 	}
 };
 
-// [GET] /products
+// [GET] /product
 const getAllProduct = async (req, res, next) => {
 	try {
 		let products = await Product.find({})
 			.populate('brand', 'title')
 			.populate('category', 'name')
-			.select('title images price stock brand category status');
+			.select('title images price stock brand category status rating');
 		return res
 			.status(200)
 			.json({ message: 'Products fetched successfully', products });
@@ -76,7 +76,7 @@ const getAllProduct = async (req, res, next) => {
 	}
 };
 
-// [GET] /products/list-submit
+// [GET] /product/list-submit
 const getProductsSubmit = async (req, res, next) => {
 	try {
 		const title = req.query.q || '';
@@ -86,7 +86,7 @@ const getProductsSubmit = async (req, res, next) => {
 		})
 			.populate('brand', 'title')
 			.populate('category', 'name')
-			.select('title images price stock brand category status');
+			.select('title images price stock brand category status rating');
 		return res
 			.status(200)
 			.json({ message: 'Product fetched successfully', products });
@@ -95,7 +95,7 @@ const getProductsSubmit = async (req, res, next) => {
 	}
 };
 
-// [GET] /products/:id
+// [GET] /product/:id
 const getProductDetail = async (req, res, next) => {
 	try {
 		let { id } = req.value.params;
@@ -110,7 +110,46 @@ const getProductDetail = async (req, res, next) => {
 	}
 };
 
-// [PATCH] /products/:id
+// [GET] /product/search
+const searchProduct = async (req, res, next) => {
+	try {
+		const { keyword, minPrice, maxPrice, category, brand } = req.query;
+
+		const filter = {};
+
+		if (keyword) {
+			filter.title = { $regex: keyword, $options: 'i' }; // case insensitive search in title
+		}
+
+		if (minPrice || maxPrice) {
+			filter.price = {};
+			if (minPrice) {
+				filter.price.$gte = minPrice;
+			}
+			if (maxPrice) {
+				filter.price.$lte = maxPrice;
+			}
+		}
+
+		if (category) {
+			filter.category = mongoose.Types.ObjectId(category); // converting string to ObjectId
+		}
+
+		if (brand) {
+			filter.brand = mongoose.Types.ObjectId(brand); // converting string to ObjectId
+		}
+		filter.status = 'ACCEPT';
+		const products = await Product.find(filter)
+			.populate('brand', 'title')
+			.populate('category', 'name')
+			.select('title images price stock brand category status rating');
+		res.json({ message: 'Product fetched successfully', products });
+	} catch (err) {
+		next(err);
+	}
+};
+
+// [PATCH] /product/:id
 const updateStatus = async (req, res, next) => {
 	try {
 		const { id } = req.value.params;
@@ -130,5 +169,6 @@ module.exports = {
 	getAllProduct,
 	getProductsSubmit,
 	getProductDetail,
+	searchProduct,
 	updateStatus,
 };

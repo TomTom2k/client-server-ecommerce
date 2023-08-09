@@ -36,6 +36,55 @@
 
 /**
  * @swagger
+ * /product/search:
+ *   get:
+ *     summary: Search for products based on various criteria.
+ *     tags: [Products]
+ *     parameters:
+ *       - in: query
+ *         name: keyword
+ *         schema:
+ *           type: string
+ *         description: Keyword for product title.
+ *       - in: query
+ *         name: minPrice
+ *         schema:
+ *           type: number
+ *         description: Minimum price of the product.
+ *       - in: query
+ *         name: maxPrice
+ *         schema:
+ *           type: number
+ *         description: Maximum price of the product.
+ *       - in: query
+ *         name: category
+ *         schema:
+ *           type: string
+ *         description: ID of the product category.
+ *       - in: query
+ *         name: brand
+ *         schema:
+ *           type: string
+ *         description: ID of the product brand.
+ *     responses:
+ *       '200':
+ *         description: A list of products that matches the search criteria.
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: Product fetched successfully
+ *                 products:
+ *                   type: array
+ *                   items:
+ *                     $ref: '#/components/schemas/Product'
+ */
+
+/**
+ * @swagger
  * /product/{id}:
  *   get:
  *     summary: Get details of a specific product.

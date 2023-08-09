@@ -7,6 +7,7 @@ const {
 	getProductDetail,
 	updateStatus,
 	getProductsSubmit,
+	searchProduct,
 } = require('../controllers/productController');
 const { authRoute } = require('../middleware/auth');
 const passport = require('passport');
@@ -14,14 +15,9 @@ const { schemas, validateParam } = require('../helpers/routerHelpers');
 
 const router = express.Router();
 
-router.get(
-	'/',
-	passport.authenticate('jwt', { session: false }),
-	authRoute(['staff', 'admin']),
-	getAllProduct
-);
 router.get('/list-submit', getProductsSubmit);
-router.get('/:id', validateParam(schemas.idSchema, 'id'), getProductDetail);
+router.get('/search', searchProduct);
+
 router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -32,6 +28,13 @@ router.post(
 	]),
 	createProduct
 );
+router.get(
+	'/',
+	passport.authenticate('jwt', { session: false }),
+	authRoute(['staff', 'admin']),
+	getAllProduct
+);
+router.get('/:id', validateParam(schemas.idSchema, 'id'), getProductDetail);
 router.patch(
 	'/:id',
 	passport.authenticate('jwt', { session: false }),

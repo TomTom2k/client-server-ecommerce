@@ -10,8 +10,8 @@ const {
 } = require('../controllers/orderController');
 const { schemas, validateParam } = require('../helpers/routerHelpers');
 
-router.get('/', passport.authenticate('jwt', { session: false }), getOrders);
 router.post('/', passport.authenticate('jwt', { session: false }), createOrder);
+router.get('/', passport.authenticate('jwt', { session: false }), getOrders);
 router.get(
 	'/:id',
 	passport.authenticate('jwt', { session: false }),

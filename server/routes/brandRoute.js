@@ -13,7 +13,6 @@ const { authRoute } = require('../middleware/auth');
 const passport = require('passport');
 const { schemas, validateParam } = require('../helpers/routerHelpers');
 
-router.get('/', getAllBrand);
 router.post(
 	'/',
 	passport.authenticate('jwt', { session: false }),
@@ -21,6 +20,7 @@ router.post(
 	upload.single('description'),
 	createBrand
 );
+router.get('/', getAllBrand);
 router.patch(
 	'/:id',
 	passport.authenticate('jwt', { session: false }),

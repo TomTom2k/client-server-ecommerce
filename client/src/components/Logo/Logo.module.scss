@@ -1,0 +1,25 @@
+.wrapper {
+    position: relative;
+    margin-left: 25px;
+
+    svg {
+        position: absolute;
+        left: -32px;
+        top: -7px;
+        z-index: -1;
+        width: 2.5rem;
+        height: 2.5rem;
+        border-radius: 50%;
+        background-color: var(--primary-color);
+    }
+
+    p {
+        font-size: 2rem;
+    }
+
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+        opacity: 0.8;
+    }
+}

@@ -11,7 +11,7 @@ const ProductSchema = Schema(
 		category: { type: Schema.Types.ObjectId, ref: 'Category' },
 		description: String,
 		userManual: [String],
-
+		rating: { type: Number, min: 0, max: 5, default: 5 },
 		status: {
 			type: String,
 			enum: ['SUBMIT', 'ACCEPT', 'CANCEL'],
