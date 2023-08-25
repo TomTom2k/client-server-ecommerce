@@ -1,0 +1,2 @@
+# Ignore environment variables in server folder
+server/.env
