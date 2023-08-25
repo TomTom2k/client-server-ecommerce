@@ -4,12 +4,12 @@ import classNames from 'classnames/bind';
 import { BsCart3 } from 'react-icons/bs';
 import { BiUser } from 'react-icons/bi';
 
-import Search from '../Search';
+import configs from '~/configs';
 import Menu from './Menu';
 import styles from './Header.module.scss';
 import Button from '~/components/Button';
 import Logo from '~/components/Logo';
-import configs from '~/configs';
+import Search from '../Search';
 
 const cx = classNames.bind(styles);
 
@@ -19,7 +19,9 @@ const Header = () => {
 		<header className={cx('wrapper')}>
 			<div className={cx('top-header')}>
 				<div className={cx('inner')}>
-					<Logo />
+					<div>
+						<Logo />
+					</div>
 					<Search />
 					{!!role ? (
 						<div className={cx('action')}>
@@ -36,8 +38,12 @@ const Header = () => {
 						</div>
 					) : (
 						<div className={cx('action')}>
-							<Button outline>Đăng ký</Button>
-							<Button primary>Đăng nhập</Button>
+							<Button outline to={configs.routes.register}>
+								Đăng ký
+							</Button>
+							<Button primary to={configs.routes.login}>
+								Đăng nhập
+							</Button>
 						</div>
 					)}
 				</div>

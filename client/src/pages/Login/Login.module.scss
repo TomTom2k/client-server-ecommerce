@@ -1,0 +1,82 @@
+.wrapper {
+    padding: 4rem 2rem;
+}
+
+.title {
+    width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--text);
+    margin-bottom: 1rem;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+
+    .submit-button {
+        margin-top: 2rem;
+    }
+
+    >span {
+        margin-top: 2rem;
+        font-size: 0.75rem;
+        text-align: center;
+    }
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    margin-bottom: 2rem;
+
+    input {
+        color: var(--text);
+        font-size: 1rem;
+
+        padding: 2px 0;
+        padding-right: 2rem;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        background-color: transparent;
+        border-bottom: 2px solid var(--text);
+    }
+
+    svg {
+        position: absolute;
+        right: 0;
+        top: 50%;
+    }
+
+    span {
+        position: absolute;
+        color: red;
+        bottom: -1.5rem;
+    }
+
+    ::placeholder {
+        color: var(--text);
+        font-size: 1rem;
+    }
+}
+
+.another {
+    width: 100%;
+    text-align: center;
+    margin-top: 0.5rem;
+
+    img {
+        width: 2rem;
+        height: 2rem;
+        object-fit: cover;
+        margin: 0 1rem;
+    }
+
+
+}

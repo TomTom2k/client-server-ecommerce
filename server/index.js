@@ -17,7 +17,11 @@ app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
 app.use(bodyParser.json());
 app.use(express.static('public'));
 
-app.use(cors());
+app.use(
+	cors({
+		exposedHeaders: ['Authorization'],
+	})
+);
 
 //connect database
 const URI =

@@ -11,10 +11,12 @@ const cx = classNames.bind(styles);
 
 const Logo = () => {
 	return (
-		<Link to={configs.routes.home} className={cx('wrapper')}>
-			<FaOpencart />
-			<h1>ShopMall</h1>
-		</Link>
+		<div className={cx('wrapper')}>
+			<Link to={configs.routes.home}>
+				<FaOpencart />
+				<h1>ShopMall</h1>
+			</Link>
+		</div>
 	);
 };
 

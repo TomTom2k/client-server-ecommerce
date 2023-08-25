@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import classNames from 'classnames/bind';
 
 import styles from './Button.module.scss';
-import classNames from 'classnames/bind';
 
 const cx = classNames.bind(styles);
 

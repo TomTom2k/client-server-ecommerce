@@ -1,4 +1,5 @@
 import configs from '~/configs';
+import { AuthLayout } from '~/layouts';
 import Cart from '~/pages/Cart';
 
 import Contact from '~/pages/Contact';
@@ -28,12 +29,12 @@ const publicRoutes = [
 	{
 		path: configs.routes.login,
 		component: Login,
-		layout: null,
+		layout: AuthLayout,
 	},
 	{
 		path: configs.routes.register,
 		component: Register,
-		layout: null,
+		layout: AuthLayout,
 	},
 ];
 

@@ -6,23 +6,34 @@
 
 .search {
     display: flex;
+    justify-content: center;
 
-    background-color: var(--text);
-    border-radius: 1rem;
-
-    overflow: hidden;
+    $borderRadius: 0.5rem;
 
     input {
         padding: 0.5rem 1rem;
         width: 15rem;
+        background-color: var(--text);
+        border-top-left-radius: $borderRadius;
+        border-bottom-left-radius: $borderRadius;
+
+        &::placeholder {
+            font-size: 0.8rem;
+        }
     }
 
     button {
         width: 3rem;
         background-color: var(--primary-color);
         cursor: pointer;
+        border-top-right-radius: $borderRadius;
+        border-bottom-right-radius: $borderRadius;
 
         transition: all 0.2s ease;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
 
         svg {
             color: var(--text);
