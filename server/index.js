@@ -10,7 +10,7 @@ const swaggerUi = require('swagger-ui-express');
 const router = require('./routes');
 
 const app = express();
-const port = 5000;
+const port = process.env.PORT || 5000;
 
 // middleware
 app.use(bodyParser.urlencoded({ extended: true, limit: '30mb' }));
@@ -46,7 +46,7 @@ const options = {
 		},
 		servers: [
 			{
-				url: 'http://localhost:5000',
+				url: process.env.URL,
 			},
 		],
 	},
