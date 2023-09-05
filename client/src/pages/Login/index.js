@@ -1,51 +1,44 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import classNames from 'classnames/bind';
 import { useForm } from 'react-hook-form';
 import { GoogleLogin } from 'react-google-login';
 
 import { AiFillLock, AiFillMail } from 'react-icons/ai';
 
-import styles from './Login.module.scss';
-import Button from '~/components/Button';
+import configs from '~/configs';
 import images from '~/asset/images';
 import { AuthToken } from '~/AuthToken';
+import Button from '~/components/Button';
+import { useNavigate } from 'react-router-dom';
+import styles from './Login.module.scss';
 
 const cx = classNames.bind(styles);
 
 const Login = () => {
+	const navigate = useNavigate();
 	const { login } = useContext(AuthToken);
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 	} = useForm();
+	const [errorMessage, setErrorMessage] = useState('');
 
-	const onSubmit = (data) => {
+	const onSubmit = async (data) => {
 		try {
-			login(data);
+			setErrorMessage('');
+			const user = await login(data);
+			if (!user) {
+				setErrorMessage('Tài khoản hoặc mật khẩu không đúng');
+			}
+			navigate(configs.routes.home);
 		} catch (error) {
-			console.error(error);
+			setErrorMessage('Tài khoản hoặc mật khẩu không đúng');
 		}
 	};
 
 	const responseGoogle = (response) => {
 		// console.log(response);
-		// if (response.error) {
-		// 	console.error('Google Login Error:', response.error);
-		// } else {
-		// 	console.log(response.tokenId);
-		// }
-		// if (response.tokenId) {
-		// 	fetch('YOUR_BACKEND_ENDPOINT', {
-		// 		method: 'POST',
-		// 		headers: {
-		// 			'Content-Type': 'application/json',
-		// 		},
-		// 		body: JSON.stringify({ token: response.tokenId }),
-		// 	});
-		// } else {
-		// 	console.error('Google login failed:', response.error);
-		// }
 	};
 
 	return (
@@ -57,6 +50,7 @@ const Login = () => {
 					<input
 						id="email"
 						placeholder="Nhập email"
+						autoComplete="email"
 						{...register('email', { required: true })}
 					/>
 					<AiFillMail />
@@ -73,6 +67,7 @@ const Login = () => {
 						id="password"
 						type="password"
 						placeholder="Nhập mật khẩu"
+						autoComplete="current-password"
 						{...register('password', { required: true })}
 					/>
 					<AiFillLock />
@@ -83,11 +78,14 @@ const Login = () => {
 					)}
 				</div>
 
-				<Button primary className={cx('submit-button')}>
-					Đăng nhập
-				</Button>
+				<div className={cx('button-group')}>
+					<span className={cx('message-error')}>{errorMessage}</span>
+					<Button primary className={cx('submit-button')}>
+						Đăng nhập
+					</Button>
+				</div>
 
-				<span>hoặc</span>
+				<span className={cx('text')}>hoặc</span>
 				<div className={cx('another')}>
 					<GoogleLogin
 						clientId={process.env.REACT_APP_CLIENT_ID}

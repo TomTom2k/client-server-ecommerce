@@ -1,31 +1,49 @@
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState, useCallback } from 'react';
 import Cookies from 'js-cookie';
-import * as authService from '~/services/authService';
+import authApi from '~/api/authApi';
 
 export let AuthToken = createContext();
 
 const AuthProvide = ({ children }) => {
-	let [user, setUser] = useState(null);
-	let [role, setRole] = useState(null);
+	let [userInfo, setUserInfo] = useState({ user: null, role: null });
 
-	let login = async (data) => {
-		let res = await authService.login(data);
-		console.log(res);
-		if (res?.headers) {
-			if (res.headers.authorization) {
+	const login = async (data) => {
+		try {
+			const res = await authApi.login(data);
+			if (res?.headers.authorization) {
 				Cookies.set('authorization', res.headers.authorization);
-				Cookies.set('authorization');
 			}
+			const user = await authApi.secret();
+			if (user) {
+				setUserInfo({ user, role: user.role });
+			}
+			return user;
+		} catch (error) {
+			throw error;
 		}
-
-		let user = await authService.secret();
-		console.log(user);
 	};
+	let secret = async () => {
+		const res = await authApi.secret();
+		if (res.user) {
+			setUserInfo({ user: res.user, role: res.user.role });
+		}
+	};
+
+	useEffect(() => {
+		const fetchInfoUser = async () => {
+			const token = Cookies.get('authorization');
+			if (token) {
+				await secret();
+			}
+		};
+		fetchInfoUser();
+	}, []);
+
 	let authData = {
-		user,
-		role,
+		...userInfo,
 
 		login,
+		secret,
 	};
 	return <AuthToken.Provider value={authData}>{children}</AuthToken.Provider>;
 };

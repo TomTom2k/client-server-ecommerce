@@ -3,11 +3,11 @@ import classNames from 'classnames/bind';
 import { AiOutlineSearch } from 'react-icons/ai';
 import HeadlessTippy from '@tippyjs/react/headless';
 
-import * as searchServices from '~/services/searchService';
 import { Wrapper as PopperWrapper } from '~/components/Popper';
 import styles from './Search.module.scss';
 import { useDebounce } from '~/hooks';
 import ProductResult from './ProductResult';
+import productApi from '~/api/productApi';
 
 const cx = classNames.bind(styles);
 
@@ -27,9 +27,8 @@ const Search = () => {
 		}
 
 		const fetchApi = async () => {
-			const result = await searchServices.search(debouncedValue);
-
-			setSearchResult(result);
+			const result = await productApi.searchProduct(debouncedValue);
+			setSearchResult(result.products);
 		};
 
 		fetchApi();
@@ -48,7 +47,7 @@ const Search = () => {
 	return (
 		<div>
 			<HeadlessTippy
-				visible={searchResult.length > 0 && showResult}
+				visible={searchResult?.length > 0 && showResult}
 				interactive
 				onClickOutside={() => setShowResult(false)}
 				render={(attrs) => (

@@ -1,8 +1,9 @@
 import { Fragment } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
-import { publicRoutes } from '~/routes';
+import { privateRoutes, publicRoutes } from '~/routes';
 import { DefaultLayout } from '~/layouts';
+import PrivateRoute from './components/PrivateRoute';
 
 function App() {
 	return (
@@ -22,6 +23,25 @@ function App() {
 								<Layout>
 									<Page />
 								</Layout>
+							}
+						/>
+					);
+				})}
+
+				{/* Private Routes */}
+				{privateRoutes.map((route, index) => {
+					return (
+						<Route
+							key={index}
+							path={route.path}
+							element={
+								<PrivateRoute roles={route.role}>
+									{route.layout ? (
+										<route.layout />
+									) : (
+										<route.component />
+									)}
+								</PrivateRoute>
 							}
 						/>
 					);

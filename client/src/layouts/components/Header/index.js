@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext, useEffect } from 'react';
 import classNames from 'classnames/bind';
 
 import { BsCart3 } from 'react-icons/bs';
@@ -10,11 +10,13 @@ import styles from './Header.module.scss';
 import Button from '~/components/Button';
 import Logo from '~/components/Logo';
 import Search from '../Search';
+import { AuthToken } from '~/AuthToken';
 
 const cx = classNames.bind(styles);
 
 const Header = () => {
-	const role = null;
+	const { role } = useContext(AuthToken);
+	// console.log(role);
 	return (
 		<header className={cx('wrapper')}>
 			<div className={cx('top-header')}>
@@ -32,7 +34,11 @@ const Header = () => {
 							>
 								Giỏ hàng
 							</Button>
-							<Button leftIcon={<BiUser />} text>
+							<Button
+								leftIcon={<BiUser />}
+								text
+								to={configs.routes.profile}
+							>
 								Nguyễn Thành Tín
 							</Button>
 						</div>
